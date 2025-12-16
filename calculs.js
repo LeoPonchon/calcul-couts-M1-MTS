@@ -1,7 +1,16 @@
 // ========== DONNÉES ==========
 
-const PRIX_BOIS = 2150; // €/m3
-const PRIX_PLASTIQUE = 5200 / 2; // €/tonne
+// Fonction pour obtenir le prix du bois depuis l'interface
+function getPrixBois() {
+    const input = document.getElementById("prix-bois");
+    return input ? parseFloat(input.value) || 2150 : 2150;
+}
+
+// Fonction pour obtenir le prix du plastique depuis l'interface
+function getPrixPlastique() {
+    const input = document.getElementById("prix-plastique");
+    return input ? parseFloat(input.value) || 2600 : 2600;
+}
 
 const BATEAUX = {
     "Pech 4": { bois: 0.1, plastique: 0.2, moulage_h: 8, finition_h: 10, prixVente: 15000 },
@@ -40,7 +49,9 @@ function coutProduction(nomBateau, quantiteMensuelle) {
     const b = BATEAUX[nomBateau];
     
     // 1. COÛTS DIRECTS
-    const coutMatieres = (b.bois * PRIX_BOIS) + (b.plastique * PRIX_PLASTIQUE);
+    const prixBois = getPrixBois();
+    const prixPlastique = getPrixPlastique();
+    const coutMatieres = (b.bois * prixBois) + (b.plastique * prixPlastique);
     
     // MOD
     const tempsProductionTotal = b.moulage_h + b.finition_h;
@@ -175,45 +186,78 @@ function afficherDetails(resultats, quantites) {
     const container = document.getElementById("details-container");
     container.innerHTML = "";
     
+    // Afficher un détail pour chaque bateau avec les totaux
     for (const [bateau, qte] of Object.entries(quantites)) {
         if (qte === 0) continue;
         
         const res = resultats[bateau];
         const b = BATEAUX[bateau];
         
+        // Calculer les totaux pour ce bateau (quantité × coût unitaire)
+        const totalMatieres = res.matieres * qte;
+        const totalMOD = res.mod * qte;
+        const totalDirects = res.coutsDirects * qte;
+        const totalMachinesMoulage = b.moulage_h * qte * COUT_MACHINE_MOULAGE_H;
+        const totalMachinesFinition = b.finition_h * qte * COUT_MACHINE_FINITION_H;
+        const totalMachines = res.machines * qte;
+        const totalAteliers = res.ateliers * qte;
+        const totalMachinesFixes = res.machinesFixes * qte;
+        const totalIndirects = res.coutsIndirects * qte;
+        const totalGeneral = res.total * qte;
+        const totalTempsMoulage = res.tempsTotalMoulage;
+        const totalTempsFinition = res.tempsTotalFinition;
+        const totalBois = b.bois * qte;
+        const totalPlastique = b.plastique * qte;
+        const totalTempsProduction = (b.moulage_h + b.finition_h) * qte;
+        
+        // Calculer les taux d'utilisation pour ce bateau
+        const tauxMoulage = res.tauxMoulage;
+        const tauxFinition = res.tauxFinition;
+        
+        // Calculer le coût MOD horaire pour l'affichage
+        const modHoraire = COUT_MOD_HORAIRE;
+        
+        // Afficher le détail pour ce bateau
         const detailsDiv = document.createElement("div");
         detailsDiv.className = "details";
         detailsDiv.innerHTML = `
             <h3>${bateau} - Quantité: ${qte} unité(s)</h3>
             <div class="detail-item">
-                <strong>Matières premières:</strong> ${formatNombre(res.matieres)} €
-                (Bois: ${b.bois} m³ × ${formatNombre(PRIX_BOIS)}€ = ${formatNombre(b.bois * PRIX_BOIS)}€, 
-                Plastique: ${b.plastique} t × ${formatNombre(PRIX_PLASTIQUE)}€ = ${formatNombre(b.plastique * PRIX_PLASTIQUE)}€)
+                <strong>Matières premières:</strong> ${formatNombre(totalMatieres)} €
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li>Bois: ${formatNombre(totalBois)} m³ × ${formatNombre(getPrixBois())}€/m³ = ${formatNombre(totalBois * getPrixBois())}€</li>
+                    <li>Plastique: ${formatNombre(totalPlastique)} t × ${formatNombre(getPrixPlastique())}€/t = ${formatNombre(totalPlastique * getPrixPlastique())}€</li>
+                </ul>
             </div>
             <div class="detail-item">
-                <strong>MOD:</strong> ${formatNombre(res.mod)} €
-                (Temps: ${b.moulage_h + b.finition_h}h × ${formatNombre(COUT_MOD_HORAIRE)}€/h)
+                <strong>MOD:</strong> ${formatNombre(totalMOD)} €
+                (Temps: ${formatNombre(totalTempsProduction)}h × ${formatNombre(modHoraire)}€/h)
             </div>
             <div class="detail-item">
-                <strong>Coûts directs:</strong> ${formatNombre(res.coutsDirects)} €
+                <strong>Coûts directs:</strong> ${formatNombre(totalDirects)} €
             </div>
             <div class="detail-item">
-                <strong>Machines (variable):</strong> ${formatNombre(res.machines)} €
-                (Moulage: ${b.moulage_h}h × ${COUT_MACHINE_MOULAGE_H}€, Finition: ${b.finition_h}h × ${COUT_MACHINE_FINITION_H}€)
+                <strong>Machines (variable):</strong> ${formatNombre(totalMachines)} €
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li>Moulage: ${formatNombre(totalTempsMoulage)}h × ${COUT_MACHINE_MOULAGE_H}€/h = ${formatNombre(totalMachinesMoulage)}€</li>
+                    <li>Finition: ${formatNombre(totalTempsFinition)}h × ${COUT_MACHINE_FINITION_H}€/h = ${formatNombre(totalMachinesFinition)}€</li>
+                </ul>
             </div>
             <div class="detail-item">
-                <strong>Ateliers (fixe):</strong> ${formatNombre(res.ateliers)} €
-                (Temps total moulage: ${res.tempsTotalMoulage}h / ${CAPACITE_MOULAGE}h = ${(res.tauxMoulage * 100).toFixed(2)}%, 
-                Temps total finition: ${res.tempsTotalFinition}h / ${CAPACITE_FINITION}h = ${(res.tauxFinition * 100).toFixed(2)}%)
+                <strong>Ateliers (fixe):</strong> ${formatNombre(totalAteliers)} €
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li>Temps total moulage: ${formatNombre(totalTempsMoulage)}h / ${CAPACITE_MOULAGE}h = ${(tauxMoulage * 100).toFixed(2)}%</li>
+                    <li>Temps total finition: ${formatNombre(totalTempsFinition)}h / ${CAPACITE_FINITION}h = ${(tauxFinition * 100).toFixed(2)}%</li>
+                </ul>
             </div>
             <div class="detail-item">
-                <strong>Machines fixes:</strong> ${formatNombre(res.machinesFixes)} €
+                <strong>Machines fixes:</strong> ${formatNombre(totalMachinesFixes)} €
             </div>
             <div class="detail-item">
-                <strong>Coûts indirects:</strong> ${formatNombre(res.coutsIndirects)} €
+                <strong>Coûts indirects:</strong> ${formatNombre(totalIndirects)} €
             </div>
             <div class="detail-item">
-                <strong>COÛT TOTAL:</strong> ${formatNombre(res.total)} €
+                <strong>COÛT TOTAL:</strong> ${formatNombre(totalGeneral)} €
             </div>
         `;
         container.appendChild(detailsDiv);
