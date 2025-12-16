@@ -9,7 +9,7 @@ function getPrixBois() {
 // Fonction pour obtenir le prix du plastique depuis l'interface
 function getPrixPlastique() {
     const input = document.getElementById("prix-plastique");
-    return input ? parseFloat(input.value) || 2600 : 2600;
+    return input ? parseFloat(input.value) || 5200 : 5200;
 }
 
 const BATEAUX = {
