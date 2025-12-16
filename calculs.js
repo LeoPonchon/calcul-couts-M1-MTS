@@ -89,6 +89,8 @@ function coutProduction(nomBateau, quantiteMensuelle) {
         total: coutTotal,
         tauxMoulage: tauxMoulage,
         tauxFinition: tauxFinition,
+        tempsMoulageUnitaire: b.moulage_h,
+        tempsFinitionUnitaire: b.finition_h,
         tempsTotalMoulage: tempsTotalMoulage,
         tempsTotalFinition: tempsTotalFinition
     };
@@ -122,13 +124,31 @@ function calculerCouts() {
 }
 
 function afficherTableau(resultats, quantites) {
-    const tbody = document.getElementById("tbody-resultats");
-    tbody.innerHTML = "";
+    const tbodyDirects = document.getElementById("tbody-resultats-directs");
+    const tbodyCapacites = document.getElementById("tbody-resultats-capacites");
+    const tbodyIndirects = document.getElementById("tbody-resultats-indirects");
+    tbodyDirects.innerHTML = "";
+    tbodyCapacites.innerHTML = "";
+    tbodyIndirects.innerHTML = "";
+    
+    // Constantes pour calculer le nombre de machines
+    const NB_MACHINES_MOULAGE = 7;
+    const NB_MACHINES_FINITION = 8;
+    const CAPACITE_MACHINE_MOULAGE = CAPACITE_MOULAGE / NB_MACHINES_MOULAGE; // 200 h/mois par machine
+    const CAPACITE_MACHINE_FINITION = CAPACITE_FINITION / NB_MACHINES_FINITION; // 200 h/mois par machine
+    const PRIX_MACHINE_MOULAGE = COUT_MACHINE_MOULAGE / NB_MACHINES_MOULAGE; // 10000 €/mois par machine
+    const PRIX_MACHINE_FINITION = COUT_MACHINE_FINITION / NB_MACHINES_FINITION; // 5000 €/mois par machine
     
     let totalQuantite = 0;
     let totalMatieres = 0;
     let totalMOD = 0;
     let totalDirects = 0;
+    let totalTempsTotal = 0;
+    let totalTempsMoulage = 0;
+    let totalTempsFinition = 0;
+    let totalPrixMachinesMoulage = 0;
+    let totalPrixMachinesFinition = 0;
+    let totalPrixMachinesTotal = 0;
     let totalMachines = 0;
     let totalAteliers = 0;
     let totalMachinesFixes = 0;
@@ -142,6 +162,9 @@ function afficherTableau(resultats, quantites) {
         totalMatieres += res.matieres * qte;
         totalMOD += res.mod * qte;
         totalDirects += res.coutsDirects * qte;
+        totalTempsTotal += res.tempsTotalMoulage + res.tempsTotalFinition;
+        totalTempsMoulage += res.tempsTotalMoulage;
+        totalTempsFinition += res.tempsTotalFinition;
         totalMachines += res.machines * qte;
         totalAteliers += res.ateliers * qte;
         totalMachinesFixes += res.machinesFixes * qte;
@@ -152,44 +175,123 @@ function afficherTableau(resultats, quantites) {
         const totalMatieresBateau = res.matieres * qte;
         const totalMODBateau = res.mod * qte;
         const totalDirectsBateau = res.coutsDirects * qte;
+        const totalTempsTotalBateau = res.tempsTotalMoulage + res.tempsTotalFinition;
+        const pourcentageMoulage = res.tauxMoulage * 100;
+        const pourcentageFinition = res.tauxFinition * 100;
+        
+        // Calculer le nombre de machines nécessaires (arrondi au supérieur)
+        const nbMachinesMoulage = Math.ceil(res.tempsTotalMoulage / CAPACITE_MACHINE_MOULAGE);
+        const nbMachinesFinition = Math.ceil(res.tempsTotalFinition / CAPACITE_MACHINE_FINITION);
+        
+        // Calculer le prix des machines nécessaires
+        const prixMachinesMoulage = nbMachinesMoulage * PRIX_MACHINE_MOULAGE;
+        const prixMachinesFinition = nbMachinesFinition * PRIX_MACHINE_FINITION;
+        const prixMachinesTotal = prixMachinesMoulage + prixMachinesFinition;
+        
+        totalPrixMachinesMoulage += prixMachinesMoulage;
+        totalPrixMachinesFinition += prixMachinesFinition;
+        totalPrixMachinesTotal += prixMachinesTotal;
+        
         const totalMachinesBateau = res.machines * qte;
         const totalAteliersBateau = res.ateliers * qte;
         const totalMachinesFixesBateau = res.machinesFixes * qte;
         const totalIndirectsBateau = res.coutsIndirects * qte;
         const totalGeneralBateau = res.total * qte;
         
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
+        // Tableau des coûts directs
+        const trDirects = document.createElement("tr");
+        trDirects.innerHTML = `
             <td><strong>${bateau}</strong></td>
             <td class="number">${qte}</td>
             <td class="number">${formatNombre(totalMatieresBateau)}</td>
             <td class="number">${formatNombre(totalMODBateau)}</td>
             <td class="number"><strong>${formatNombre(totalDirectsBateau)}</strong></td>
+            <td class="number"><strong>${formatNombre(totalTempsTotalBateau)}</strong></td>
+        `;
+        tbodyDirects.appendChild(trDirects);
+        
+        // Tableau des capacités et machines
+        const trCapacites = document.createElement("tr");
+        trCapacites.innerHTML = `
+            <td><strong>${bateau}</strong></td>
+            <td class="number">${qte}</td>
+            <td class="number">${pourcentageMoulage.toFixed(2)}%</td>
+            <td class="number">${pourcentageFinition.toFixed(2)}%</td>
+            <td class="number">${nbMachinesMoulage}</td>
+            <td class="number">${nbMachinesFinition}</td>
+            <td class="number">${formatNombre(prixMachinesMoulage)}</td>
+            <td class="number">${formatNombre(prixMachinesFinition)}</td>
+            <td class="number"><strong>${formatNombre(prixMachinesTotal)}</strong></td>
+        `;
+        tbodyCapacites.appendChild(trCapacites);
+        
+        // Tableau des coûts indirects
+        const trIndirects = document.createElement("tr");
+        trIndirects.innerHTML = `
+            <td><strong>${bateau}</strong></td>
+            <td class="number">${qte}</td>
             <td class="number">${formatNombre(totalMachinesBateau)}</td>
             <td class="number">${formatNombre(totalAteliersBateau)}</td>
             <td class="number">${formatNombre(totalMachinesFixesBateau)}</td>
             <td class="number"><strong>${formatNombre(totalIndirectsBateau)}</strong></td>
             <td class="number"><strong>${formatNombre(totalGeneralBateau)}</strong></td>
         `;
-        tbody.appendChild(tr);
+        tbodyIndirects.appendChild(trIndirects);
     }
     
-    // Ligne de total
-    const trTotal = document.createElement("tr");
-    trTotal.className = "total-row";
-    trTotal.innerHTML = `
+    // Calculer les pourcentages totaux et nombre de machines total
+    const pourcentageMoulageTotal = totalTempsMoulage > 0 ? (totalTempsMoulage / CAPACITE_MOULAGE) * 100 : 0;
+    const pourcentageFinitionTotal = totalTempsFinition > 0 ? (totalTempsFinition / CAPACITE_FINITION) * 100 : 0;
+    const nbMachinesMoulageTotal = Math.ceil(totalTempsMoulage / CAPACITE_MACHINE_MOULAGE);
+    const nbMachinesFinitionTotal = Math.ceil(totalTempsFinition / CAPACITE_MACHINE_FINITION);
+    
+    // Ligne de total - Tableau des coûts directs
+    const trTotalDirects = document.createElement("tr");
+    trTotalDirects.className = "total-row";
+    trTotalDirects.innerHTML = `
         <td><strong>TOTAL</strong></td>
         <td class="number"><strong>${totalQuantite}</strong></td>
         <td class="number"><strong>${formatNombre(totalMatieres)}</strong></td>
         <td class="number"><strong>${formatNombre(totalMOD)}</strong></td>
         <td class="number"><strong>${formatNombre(totalDirects)}</strong></td>
+        <td class="number"><strong>${formatNombre(totalTempsTotal)}</strong></td>
+    `;
+    tbodyDirects.appendChild(trTotalDirects);
+    
+    // Calculer le prix total des machines pour la ligne TOTAL
+    const prixMachinesMoulageTotal = nbMachinesMoulageTotal * PRIX_MACHINE_MOULAGE;
+    const prixMachinesFinitionTotal = nbMachinesFinitionTotal * PRIX_MACHINE_FINITION;
+    const prixMachinesTotalTotal = prixMachinesMoulageTotal + prixMachinesFinitionTotal;
+    
+    // Ligne de total - Tableau des capacités
+    const trTotalCapacites = document.createElement("tr");
+    trTotalCapacites.className = "total-row";
+    trTotalCapacites.innerHTML = `
+        <td><strong>TOTAL</strong></td>
+        <td class="number"><strong>${totalQuantite}</strong></td>
+        <td class="number"><strong>${pourcentageMoulageTotal.toFixed(2)}%</strong></td>
+        <td class="number"><strong>${pourcentageFinitionTotal.toFixed(2)}%</strong></td>
+        <td class="number"><strong>${nbMachinesMoulageTotal}</strong></td>
+        <td class="number"><strong>${nbMachinesFinitionTotal}</strong></td>
+        <td class="number"><strong>${formatNombre(prixMachinesMoulageTotal)}</strong></td>
+        <td class="number"><strong>${formatNombre(prixMachinesFinitionTotal)}</strong></td>
+        <td class="number"><strong>${formatNombre(prixMachinesTotalTotal)}</strong></td>
+    `;
+    tbodyCapacites.appendChild(trTotalCapacites);
+    
+    // Ligne de total - Tableau des coûts indirects
+    const trTotalIndirects = document.createElement("tr");
+    trTotalIndirects.className = "total-row";
+    trTotalIndirects.innerHTML = `
+        <td><strong>TOTAL</strong></td>
+        <td class="number"><strong>${totalQuantite}</strong></td>
         <td class="number"><strong>${formatNombre(totalMachines)}</strong></td>
         <td class="number"><strong>${formatNombre(totalAteliers)}</strong></td>
         <td class="number"><strong>${formatNombre(totalMachinesFixes)}</strong></td>
         <td class="number"><strong>${formatNombre(totalIndirects)}</strong></td>
         <td class="number"><strong>${formatNombre(totalGeneral)}</strong></td>
     `;
-    tbody.appendChild(trTotal);
+    tbodyIndirects.appendChild(trTotalIndirects);
 }
 
 function afficherDetails(resultats, quantites) {
