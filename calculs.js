@@ -148,18 +148,28 @@ function afficherTableau(resultats, quantites) {
         totalIndirects += res.coutsIndirects * qte;
         totalGeneral += res.total * qte;
         
+        // Calculer les totaux pour cette quantité de bateaux
+        const totalMatieresBateau = res.matieres * qte;
+        const totalMODBateau = res.mod * qte;
+        const totalDirectsBateau = res.coutsDirects * qte;
+        const totalMachinesBateau = res.machines * qte;
+        const totalAteliersBateau = res.ateliers * qte;
+        const totalMachinesFixesBateau = res.machinesFixes * qte;
+        const totalIndirectsBateau = res.coutsIndirects * qte;
+        const totalGeneralBateau = res.total * qte;
+        
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td><strong>${bateau}</strong></td>
             <td class="number">${qte}</td>
-            <td class="number">${formatNombre(res.matieres)}</td>
-            <td class="number">${formatNombre(res.mod)}</td>
-            <td class="number"><strong>${formatNombre(res.coutsDirects)}</strong></td>
-            <td class="number">${formatNombre(res.machines)}</td>
-            <td class="number">${formatNombre(res.ateliers)}</td>
-            <td class="number">${formatNombre(res.machinesFixes)}</td>
-            <td class="number"><strong>${formatNombre(res.coutsIndirects)}</strong></td>
-            <td class="number"><strong>${formatNombre(res.total)}</strong></td>
+            <td class="number">${formatNombre(totalMatieresBateau)}</td>
+            <td class="number">${formatNombre(totalMODBateau)}</td>
+            <td class="number"><strong>${formatNombre(totalDirectsBateau)}</strong></td>
+            <td class="number">${formatNombre(totalMachinesBateau)}</td>
+            <td class="number">${formatNombre(totalAteliersBateau)}</td>
+            <td class="number">${formatNombre(totalMachinesFixesBateau)}</td>
+            <td class="number"><strong>${formatNombre(totalIndirectsBateau)}</strong></td>
+            <td class="number"><strong>${formatNombre(totalGeneralBateau)}</strong></td>
         `;
         tbody.appendChild(tr);
     }
