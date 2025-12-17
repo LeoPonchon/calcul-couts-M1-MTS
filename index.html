@@ -95,6 +95,11 @@
             letter-spacing: -0.1px;
         }
 
+        small {
+            display: block;
+            line-height: 1.4;
+        }
+
         input[type="number"] {
             padding: 12px 16px;
             border: 1px solid #d2d2d7;
@@ -349,7 +354,37 @@
         <h1>Calcul des Coûts de Production</h1>
 
         <div class="card">
-            <h2>Prix des matières premières</h2>
+            <h2>Configuration des ressources</h2>
+            
+            <h3>Machines disponibles</h3>
+            <div class="input-group">
+                <div class="input-item">
+                    <label>Nombre de machines de moulage:</label>
+                    <input type="number" id="nb-machines-moulage" value="7" min="1" max="20" step="1" onchange="calculerCouts()">
+                    <small style="color: #6e6e73; font-size: 13px; margin-top: 4px;">Capacité: 200h/mois par machine | Coût: 10 000€/mois par machine</small>
+                </div>
+                <div class="input-item">
+                    <label>Nombre de machines de finition:</label>
+                    <input type="number" id="nb-machines-finition" value="8" min="1" max="20" step="1" onchange="calculerCouts()">
+                    <small style="color: #6e6e73; font-size: 13px; margin-top: 4px;">Capacité: 200h/mois par machine | Coût: 5 000€/mois par machine</small>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 32px;">Stocks disponibles</h3>
+            <div class="input-group">
+                <div class="input-item">
+                    <label>Stock de bois disponible (m³):</label>
+                    <input type="number" id="stock-bois" value="0" min="0" step="0.01" onchange="calculerCouts()">
+                    <small style="color: #6e6e73; font-size: 13px; margin-top: 4px;">Quantité de bois déjà en stock</small>
+                </div>
+                <div class="input-item">
+                    <label>Stock de plastique disponible (t):</label>
+                    <input type="number" id="stock-plastique" value="0" min="0" step="0.01" onchange="calculerCouts()">
+                    <small style="color: #6e6e73; font-size: 13px; margin-top: 4px;">Quantité de plastique déjà en stock</small>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 32px;">Prix des matières premières</h3>
             <div class="input-group">
                 <div class="input-item">
                     <label>Prix du bois (€/m³):</label>
@@ -377,6 +412,12 @@
                     <label>Stan 8:</label>
                     <input type="number" id="qte-stan8" value="1" min="0" onchange="calculerCouts()">
                 </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Gestion des stocks</h2>
+            <div id="analyse-stock-container">
             </div>
         </div>
 
@@ -436,6 +477,24 @@
                 <tbody id="tbody-resultats-indirects">
                 </tbody>
             </table>
+        </div>
+
+        <div class="card">
+            <h2>Mix de production optimal</h2>
+            <div id="mix-optimal-container">
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Stratégie de production annuelle</h2>
+            <div id="strategie-annuelle-container">
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Analyse de rentabilité et recommandations</h2>
+            <div id="analyse-rentabilite-container">
+            </div>
         </div>
 
         <div class="card">
