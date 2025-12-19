@@ -1,0 +1,216 @@
+
+Année 0 - Décembre
+
+Pech 4
+Total des coûts de production du produit	208 288,91 €
+
+Prom 5.5
+Total des coûts de production du produit	350 072,59 €
+
+Stan 8
+Total des coûts de production du produit	68 723,50 €
+
+Année 1 - Janvier
+
+Pech 4
+Total des coûts de production du produit	102 845,47 €
+
+Prom 5.5
+Total des coûts de production du produit	214 337,84 €
+
+Stan 8
+Total des coûts de production du produit	33 661,69 €
+
+Année 1 - Février
+
+Pech 4
+Total des coûts de production du produit	102 845,47 €
+
+Prom 5.5
+Total des coûts de production du produit	214 337,84 €
+
+Stan 8
+Total des coûts de production du produit	33 661,69 €
+
+
+Année 1 - Mars
+
+Pech 4
+Total des coûts de production du produit	99 727,76 €
+
+Prom 5.5
+Total des coûts de production du produit	210 852,44 €
+
+Stan 8
+Total des coûts de production du produit	17 739,80 €
+
+Année 1 - Avril
+
+Pech 4
+Total des coûts de production du produit	125 560,15 €
+
+Prom 5.5
+Total des coûts de production du produit	654 192,37 €
+
+Stan 8
+Total des coûts de production du produit	462 333,27 €
+
+Année 1 - Mai
+
+Pech 4
+Total des coûts de production du produit	125 560,15 €
+
+Prom 5.5
+Total des coûts de production du produit	654 192,37 €
+
+Stan 8
+Total des coûts de production du produit	462 333,27 €
+
+Année 1 - Juin
+
+Pech 4
+Total des coûts de production du produit	125 560,15 €
+
+Prom 5.5
+Total des coûts de production du produit	654 192,37 €
+
+Stan 8
+Total des coûts de production du produit	462 333,27 €
+
+Année 1 - Juillet
+
+Pech 4
+Total des coûts de production du produit	264 222,86 €
+
+Prom 5.5
+Total des coûts de production du produit	573 604,85 €
+
+Stan 8
+Total des coûts de production du produit	243 228,08 €
+
+Année 1 - Aout
+
+Pech 4
+Total des coûts de production du produit	245 594,07 €
+
+Prom 5.5
+Total des coûts de production du produit	533 163,33 €
+
+Stan 8
+Total des coûts de production du produit	223 288,39 €
+
+Année 1 - Septembre
+
+Pech 4
+Total des coûts de production du produit	241 729,64 €
+
+Prom 5.5
+Total des coûts de production du produit	521 775,30 €
+
+Stan 8
+Total des coûts de production du produit	211 925,85 €
+
+Année 1 - Octobre
+
+Pech 4
+Total des coûts de production du produit	0,00 €
+
+Prom 5.5
+Total des coûts de production du produit	566 855,02 €
+
+Stan 8
+Total des coûts de production du produit	166 920,77 €
+
+Année 1 - Novembre
+
+Pech 4
+Total des coûts de production du produit	0,00 €
+
+Prom 5.5
+Total des coûts de production du produit	566 855,02 €
+
+Stan 8
+Total des coûts de production du produit	166 920,77 €
+
+Année 1 - Décembre
+
+Pech 4
+Total des coûts de production du produit	0,00 €
+
+Prom 5.5
+Total des coûts de production du produit	566 855,02 €
+
+Stan 8
+Total des coûts de production du produit	166 920,77 €
+
+Année 2 - Janvier
+
+Pech 4
+Total des coûts de production du produit	302 410,87 €
+
+Prom 5.5
+Total des coûts de production du produit	525 206,14 €
+
+Stan 8
+Total des coûts de production du produit	364 663,78 €
+
+Année 2 - Février
+
+Pech 4
+Total des coûts de production du produit	205 728,75 €
+
+Prom 5.5
+Total des coûts de production du produit	357 295,35 €
+
+Stan 8
+Total des coûts de production du produit	249 391,69 €
+
+
+Année 2 - Mars
+
+Pech 4
+Total des coûts de production du produit	194 824,57 €
+
+Prom 5.5
+Total des coûts de production du produit	338 357,72 €
+
+Stan 8
+Total des coûts de production du produit	227 738,50 €
+
+Année 2 - Avril
+
+Pech 4
+Total des coûts de production du produit	157 539,87 
+
+Prom 5.5
+Total des coûts de production du produit	684 010,67 €
+
+Stan 8
+Total des coûts de production du produit	386 725,25 €
+
+
+Année 2 - Mai
+
+Pech 4
+Total des coûts de production du produit	150 281,78 €
+
+Prom 5.5
+Total des coûts de production du produit	660 827,09 €
+
+Stan 8
+Total des coûts de production du produit	366 291,92 €
+
+Année 2 - Juin
+
+Pech 4
+Total des coûts de production du produit	152 560,05 €
+
+Prom 5.5
+Total des coûts de production du produit	667 909,12 €
+
+Stan 8
+Total des coûts de production du produit	377 101,62 €
+
+
+
+

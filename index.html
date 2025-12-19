@@ -4,72 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Félicitations ! - Calcul des Coûts de Production</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Styles spécifiques à la page d'accueil (fond sombre et animations) */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
             color: #ffffff;
             position: relative;
         }
 
-        /* Navbar */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 16px 32px;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .navbar h1 {
-            font-size: 24px;
-            font-weight: 600;
             color: #ffffff;
-            margin: 0;
-        }
-
-        .navbar a {
-            color: #ffffff;
-            text-decoration: none;
-            padding: 10px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .navbar a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
         }
 
         /* Container principal */
         .container {
             position: relative;
             z-index: 10;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 120px 20px 40px;
             text-align: center;
+            overflow: hidden;
         }
 
         /* Titre principal */
@@ -215,17 +181,20 @@
             width: 10px;
             height: 10px;
             background: #ffd700;
-            position: absolute;
+            top: -100px;
             animation: confetti-fall 3s linear infinite;
         }
 
         @keyframes confetti-fall {
             0% {
-                transform: translateY(-100vh) rotate(0deg);
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            70% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(100vh) rotate(720deg);
+                transform: translateY(calc(100vh + 200px)) rotate(720deg);
                 opacity: 0;
             }
         }
@@ -285,19 +254,6 @@
             .message {
                 font-size: 18px;
             }
-
-            .navbar {
-                padding: 12px 16px;
-            }
-
-            .navbar h1 {
-                font-size: 18px;
-            }
-
-            .navbar a {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
         }
     </style>
 </head>
@@ -305,7 +261,9 @@
     <!-- Navbar -->
     <nav class="navbar">
         <h1>🎉 M1-MTS</h1>
-        <a href="outil.html">Accéder à l'outil</a>
+        <div>
+            <a href="outil.html">Accéder à l'outil</a>
+        </div>
     </nav>
 
     <!-- Feux d'artifices -->
